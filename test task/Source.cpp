@@ -1,13 +1,20 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
 
 
 
-
+class A 
+{
+public:
+	A(int x, int y) {
+		
+	}
+};
 
 
 
@@ -17,6 +24,9 @@ using namespace std;
 
 int main()
 {
+	int point=0;
+	int size = 4;
+	int arr[4][2];
 	string polys = "polys.txt";
 	string lines = "lines.txt";
 	ofstream fileout_polys, fileout_lines;
@@ -35,7 +45,24 @@ int main()
 	}
 
 	
-	
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			if (j==0)
+			{
+				cout << "enter X ";
+				cin >> point;
+			}
+			else if (j==1)
+			{
+				cout << "enter Y ";
+				cin >> point;
+			}
+			arr[i][j] = point;
+		}
+
+	}
 
 
 
