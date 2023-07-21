@@ -43,7 +43,7 @@ int main()
 	{
 		cout << "File opening error" << endl;
 	}
-
+	
 	
 	for (int i = 0; i < size; i++)
 	{
@@ -64,7 +64,21 @@ int main()
 
 	}
 
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			if (j==0)
+			{
+				fileout_polys << "X=" << arr[i][j];
+			}
+			if (j==1)
+			{
+				fileout_polys << "Y=" << arr[i][j];
+			}
+		}
 
+	}
 
 
 
