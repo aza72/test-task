@@ -70,8 +70,6 @@ int main()
 			}
 		}
 
-	}
-	fileout_polys.close();
 
 	while (!in.eof())
 	{
