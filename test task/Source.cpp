@@ -89,20 +89,40 @@ int main()
 	int r= 0/*stoi(res)*/;
 	/*istringstream(res) >> r;*/
 	//cout <<r << endl;
+	int mass[4][2];
 	for (int i = 0; i < str.size(); i++)
 	{
 		if (str[i]=='=')
 		{
 			res = str.substr(i+1)   ;
-			
-		}
-
+			r = stoi(res);
 		
-		//cout << str[i] << endl;
+		    if (columcount == 0 || columcount % 2 == 0)
+		    {
+			mass[rowcount][columcount] = r;
+			columcount++;
+		     }
+		     else
+		      {
+			mass[rowcount][columcount] = r;
+			rowcount++;
+			columcount--;
+		      }
+		}
+		
 	}
-	r = stoi(res);
-	cout << r;
-	
+
+
+
+	/*r = stoi(res);
+	cout << r;*/
+	for (size_t i = 0; i < 4; i++)
+	{
+		for (size_t j = 0; j < 2; j++)
+		{
+			cout << mass[i][j] << endl;
+		}
+	}
 	
 	fileout_lines.close();
 //111
