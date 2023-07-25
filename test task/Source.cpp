@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 #include <vector>
+
 
 using namespace std;
 
@@ -60,29 +62,47 @@ int main()
 	{
 		for (int j = 0; j < 2; j++)
 		{
-			if (j==0)
+			if (j == 0)
 			{
-				fileout_polys << "X=" << arr[i][j]<<",";
+				fileout_polys << "X=" << arr[i][j] << ",";
 			}
-			if (j==1)
+			if (j == 1)
 			{
-				fileout_polys << "Y=" << arr[i][j]<<"\t";
+				fileout_polys << "Y=" << arr[i][j] << "\t";
 			}
 		}
-
-
-	while (!in.eof())
-	{
-		getline(in, str);
-		cout << str;
 	}
-	
+	fileout_polys.close();
+
+	      while (!in.eof())
+	       {
+		    getline(in, str);
+		     cout << str;
+	       }
+		  cout << endl;
 	in.close();
+
+	int rowcount = 0;
+	int columcount = 0;
+	string res="";
+	//res.push_back(str[2]);
+	int r= 0/*stoi(res)*/;
+	/*istringstream(res) >> r;*/
+	//cout <<r << endl;
+	for (int i = 0; i < str.size(); i++)
+	{
+		if (str[i]=='=')
+		{
+			res = str.substr(i+1)   ;
+			
+		}
+
+		
+		//cout << str[i] << endl;
+	}
+	r = stoi(res);
+	cout << r;
 	
-	char str2 = "=";
-	string res= str.find(str,0);
-	
-	cout << res;
 	
 	fileout_lines.close();
 
