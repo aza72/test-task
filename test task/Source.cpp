@@ -7,12 +7,120 @@
 
 using namespace std;
 
+//class methods
+class methods
+{
+public:
 
+	
+	methods();
+	~methods();
+	/*int trw(rectangle A, rectangle B, segments Aseg, segments Bseg);
+	{
+		
 
+	}*/
 
+private:
 
+};
 
+methods::methods()
+{
+}
 
+methods::~methods()
+{
+}
+// end class methods
+
+//class rectangle
+class rectangle
+{
+public:
+	rectangle();
+	~rectangle();
+
+	void set_x_y(int x, int y);
+	int getX();
+	int getY();
+
+private:
+	int x;
+	int y;
+};
+
+rectangle::rectangle()
+{
+	 this->x = 0;
+	 this->y = 0;
+}
+
+rectangle::~rectangle()
+{
+}
+
+void rectangle::set_x_y(int x, int y)
+{
+	 this->x = x;
+	 this->y = y;
+}
+
+int rectangle::getX()
+{
+	return x;
+}
+
+int rectangle::getY()
+{
+	return y;
+}
+	
+
+// end class rectangle
+
+// class segments
+class segments
+{
+public:
+	segments();
+	~segments();
+	void setXsegYseg(int xseg, int yseg);
+	int getXseg();
+	int getYseg();
+
+private:
+	int xseg;
+	int yseg;
+};
+
+segments::segments()
+{
+	this->xseg = 0;
+	this->yseg = 0;
+}
+
+segments::~segments()
+{
+}
+
+void segments::setXsegYseg(int xseg, int yseg)
+{
+	this->xseg = xseg;
+	this->yseg = yseg;
+}
+
+int segments::getXseg()
+{
+	return xseg;;
+}
+
+int segments::getYseg()
+{
+	return yseg;
+}
+
+// end class segments
 
 
 int main()
@@ -123,9 +231,29 @@ int main()
 			cout << mass[i][j] << endl;
 		}
 	}
+
+	
+
+
 	
 	fileout_lines.close();
-//111
+
+	//test
+	rectangle A,B,C,D;
+	
+	A.set_x_y(5, 2);
+	B.set_x_y(4, 3);
+
+	int f= B.getX();
+
+	segments Aseg;
+	Aseg.setXsegYseg(12, 2);
+	int g = Aseg.getYseg();
+
+ //contined test
+	
+
+
 	return 0;
 }
 
