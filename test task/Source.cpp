@@ -12,12 +12,12 @@ class methods
 {
 public:
 
-	
+
 	methods();
 	~methods();
 	/*int trw(rectangle A, rectangle B, segments Aseg, segments Bseg);
 	{
-		
+
 
 	}*/
 
@@ -45,6 +45,11 @@ public:
 	int getX();
 	int getY();
 
+	void sortPoint(int mass[][2]);
+
+
+
+
 private:
 	int x;
 	int y;
@@ -52,8 +57,8 @@ private:
 
 rectangle::rectangle()
 {
-	 this->x = 0;
-	 this->y = 0;
+	this->x = 0;
+	this->y = 0;
 }
 
 rectangle::~rectangle()
@@ -62,8 +67,8 @@ rectangle::~rectangle()
 
 void rectangle::set_x_y(int x, int y)
 {
-	 this->x = x;
-	 this->y = y;
+	this->x = x;
+	this->y = y;
 }
 
 int rectangle::getX()
@@ -75,7 +80,35 @@ int rectangle::getY()
 {
 	return y;
 }
+void rectangle::sortPoint(int mass[][2])
+{
+
+	int startindex = 0;
+	int j = 0;
+	int count = 0;
+	for (int i = 0; count < 3; i++)
+	{
+
+		if (mass[startindex][0] > mass[i + 1][0])
+		{
+			swap(mass[startindex][0], mass[i + 1][0]);
+			swap(mass[startindex][1], mass[i + 1][1]);
+			startindex++;
+		}
+
+		    if(i == 3)
+			{
+
+				count++;
+				i = 0;
+				startindex = 0;
+            }
+		
+	}
+
 	
+	
+}
 
 // end class rectangle
 
@@ -250,8 +283,15 @@ int main()
 	Aseg.setXsegYseg(12, 2);
 	int g = Aseg.getYseg();
 
- //contined test
+	D.sortPoint(mass);
+
+ //end test
 	
+	
+
+
+
+
 
 
 	return 0;
