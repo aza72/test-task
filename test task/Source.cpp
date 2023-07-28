@@ -91,19 +91,35 @@ void rectangle::sortPoint(int mass[][2])
 
 		if (mass[startindex][0] > mass[i + 1][0])
 		{
-			swap(mass[startindex][0], mass[i + 1][0]);
-			swap(mass[startindex][1], mass[i + 1][1]);
-			startindex++;
+			if (mass[j][0] > mass[i + 1][0])
+			{
+				j = i + 1;
+			}
+
 		}
 
-		    if(i == 3)
-			{
+		if (i == 2)
+		{
+			swap(mass[startindex][0], mass[j][0]);
+			swap(mass[startindex][1], mass[j][1]);
+			startindex++;
+			count++;
+			i = count - 1;
+		}
+	}
+	 
+	if (mass[0][1]>mass[1][1])
+	{
+		swap(mass[0][1], mass[1][1]);
+		swap(mass[0][0], mass[1][0]);
 
-				count++;
-				i = 0;
-				startindex = 0;
-            }
-		
+	}
+
+	if (mass[2][1] < mass[3][1])
+	{
+		swap(mass[2][1], mass[3][1]);
+		swap(mass[2][0], mass[3][0]);
+
 	}
 
 	
@@ -265,17 +281,16 @@ int main()
 		}
 	}
 
-	
-
-
-	
 	fileout_lines.close();
+	rectangle A, B, C, D, E;
+	E.sortPoint(mass);
+
 
 	//test
-	rectangle A,B,C,D;
 	
-	A.set_x_y(5, 2);
-	B.set_x_y(4, 3);
+	
+	A.set_x_y(mass[0][0], mass[0][1]);
+	B.set_x_y(mass[1][0], mass[1][1]);
 
 	int f= B.getX();
 
@@ -283,12 +298,12 @@ int main()
 	Aseg.setXsegYseg(12, 2);
 	int g = Aseg.getYseg();
 
-	D.sortPoint(mass);
+	
 
  //end test
 	
 	
-
+   
 
 
 
