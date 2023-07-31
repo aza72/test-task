@@ -98,10 +98,15 @@ void rectangle::sortPoint(int mass[][2])
 
 		}
 
-		if (i == 2)
+
+		if (i == 2 )
 		{
-			swap(mass[startindex][0], mass[j][0]);
-			swap(mass[startindex][1], mass[j][1]);
+			if (j!=0)
+			{
+				swap(mass[startindex][0], mass[j][0]);
+				swap(mass[startindex][1], mass[j][1]);
+				
+			}
 			startindex++;
 			count++;
 			i = count - 1;
@@ -121,8 +126,6 @@ void rectangle::sortPoint(int mass[][2])
 		swap(mass[2][0], mass[3][0]);
 
 	}
-
-	
 	
 }
 
@@ -181,7 +184,7 @@ int main()
 	string polys = "polys.txt";
 	string lines = "lines.txt";
 	ofstream fileout_polys, fileout_lines;
-	ifstream in(polys);
+	ifstream in(polys),in1(lines);
 	fileout_polys.open(polys);
 	fileout_lines.open(lines);
 
@@ -190,12 +193,7 @@ int main()
 		cout << "File opening error" << endl;
 	}
 
-	if (!fileout_lines.is_open())
-	{
-		cout << "File opening error" << endl;
-	}
-	
-	
+	//заполнение
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < 2; j++)
@@ -214,7 +212,7 @@ int main()
 		}
 
 	}
-
+	//запись в файл
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 2; j++)
@@ -230,22 +228,22 @@ int main()
 		}
 	}
 	fileout_polys.close();
-
+	//считывание
 	      while (!in.eof())
 	       {
 		    getline(in, str);
-		     cout << str;
+		     cout << str;//удалить
 	       }
-		  cout << endl;
+		  cout << endl;//удалить
 	in.close();
 
 	int rowcount = 0;
 	int columcount = 0;
 	string res="";
-	//res.push_back(str[2]);
-	int r= 0/*stoi(res)*/;
-	/*istringstream(res) >> r;*/
-	//cout <<r << endl;
+	int r= 0;
+	
+
+	//извлечение точек из файла
 	int mass[4][2];
 	for (int i = 0; i < str.size(); i++)
 	{
@@ -269,10 +267,7 @@ int main()
 		
 	}
 
-
-
-	/*r = stoi(res);
-	cout << r;*/
+	//cout
 	for (size_t i = 0; i < 4; i++)
 	{
 		for (size_t j = 0; j < 2; j++)
@@ -281,11 +276,78 @@ int main()
 		}
 	}
 
-	fileout_lines.close();
-	rectangle A, B, C, D, E;
+
+
+
+	
+    rectangle A, B, C, D, E;
 	E.sortPoint(mass);
 
+	if (!fileout_lines.is_open())
+	{
+		cout << "File opening error" << endl;
+	}
 
+	//запись в файл отрезки
+	int temp;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			if (j == 0)
+			{
+				cout << i << " Enter X=";
+				cin >> temp;
+				fileout_lines << "X=" << temp << ",";
+			}
+			if (j == 1)
+			{
+				cout << i << " Enter Y=";
+				cin >> temp;
+				fileout_lines << "Y=" << temp << "\t";
+			}
+		}
+		fileout_lines << "\n" ;
+	}
+	fileout_lines.close();
+	//считывание отрезки
+	 rowcount = 0;
+	 columcount = 0;
+	 res = "";
+	 r = 0;
+	int arrseg[4][2];
+	//str = "";
+	while (!in1.eof())
+	{
+		getline(in1, str);
+		cout << str;//удалить
+		for (int i = 0; i < str.size(); i++)
+		{
+			if (str[i] == '=')
+			{
+				res = str.substr(i + 1);
+				r = stoi(res);
+
+				if (columcount == 0 || columcount % 2 == 0)
+				{
+					arrseg[rowcount][columcount] = r;
+					columcount++;
+				}
+				else
+				{
+					arrseg[rowcount][columcount] = r;
+					rowcount++;
+					columcount--;
+				}
+			}
+
+		}
+
+	}
+	cout << endl;//удалить
+	in1.close();
+
+	
 	//test
 	
 	
