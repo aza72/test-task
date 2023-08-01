@@ -7,32 +7,10 @@
 
 using namespace std;
 
-//class methods
-class methods
-{
-public:
 
 
-	methods();
-	~methods();
-	/*int trw(rectangle A, rectangle B, segments Aseg, segments Bseg);
-	{
-
-
-	}*/
-
-private:
-
-};
-
-methods::methods()
-{
-}
-
-methods::~methods()
-{
-}
-// end class methods
+//int chekk(rectangle& A, rectangle& B, rectangle& C, rectangle& D, segments& Aseg, segments& Bseg);
+int intersectionOfproctions(int xarec, int yarec, int xbrec, int ybrec, int xaseg, int yaseg, int xbseg, int ybseg);
 
 //class rectangle
 class rectangle
@@ -46,7 +24,7 @@ public:
 	int getY();
 
 	void sortPoint(int mass[][2]);
-
+	friend int chekk(rectangle& A, rectangle& B, rectangle& C, rectangle& D, segments& Aseg, segments& Bseg);
 
 
 
@@ -140,6 +118,7 @@ public:
 	void setXsegYseg(int xseg, int yseg);
 	int getXseg();
 	int getYseg();
+	friend int chekk(rectangle& A, rectangle& B, rectangle& C, rectangle& D, segments& Aseg, segments& Bseg);
 
 private:
 	int xseg;
@@ -173,7 +152,23 @@ int segments::getYseg()
 }
 
 // end class segments
+int chekk(rectangle& A, rectangle& B, rectangle& C, rectangle& D, segments& Aseg, segments& Bseg)
+{
+	int xa = A.getX();
+	int ya = A.getY();
+	int xb = B.getX();
+	int yb = B.getY();
+	int xc = C.getX();
+	int yc = C.getY();
+	int xd = D.getX();
+	int yd = D.getY();
+	int Xaseg = Aseg.getXseg();
+	int Yaseg = Aseg.getYseg();
+	int Xbseg = Bseg.getXseg();
+	int Ybseg = Bseg.getYseg();
 
+	//intersectionOfproctions();
+}
 
 int main()
 {
@@ -282,6 +277,10 @@ int main()
 	
     rectangle A, B, C, D, E;
 	E.sortPoint(mass);
+	A.set_x_y(mass[0][0], mass[0][1]);
+	B.set_x_y(mass[1][0], mass[1][1]);
+	C.set_x_y(mass[2][0], mass[2][1]);
+	D.set_x_y(mass[3][0], mass[3][1]);
 
 	if (!fileout_lines.is_open())
 	{
@@ -290,7 +289,7 @@ int main()
 
 	//запись в файл отрезки
 	int temp;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		for (int j = 0; j < 2; j++)
 		{
@@ -315,7 +314,7 @@ int main()
 	 columcount = 0;
 	 res = "";
 	 r = 0;
-	int arrseg[4][2];
+	int arrseg[8][2];
 	//str = "";
 	while (!in1.eof())
 	{
@@ -335,37 +334,45 @@ int main()
 				}
 				else
 				{
-					arrseg[rowcount][columcount] = r;
-					rowcount++;
-					columcount--;
+arrseg[rowcount][columcount] = r;
+rowcount++;
+columcount--;
 				}
 			}
 
 		}
 
 	}
-	cout << endl;//удалить
-	in1.close();
 
-	
+	in1.close();
+	segments Aseg, Bseg, A2seg, B2seg, A3seg, B3seg, A4seg, B4seg;
+	Aseg.setXsegYseg(arrseg[0][0], arrseg[0][1]);
+	Bseg.setXsegYseg(arrseg[1][0], arrseg[1][1]);
+	A2seg.setXsegYseg(arrseg[2][0], arrseg[2][1]);
+	B2seg.setXsegYseg(arrseg[3][0], arrseg[3][1]);
+	A3seg.setXsegYseg(arrseg[4][0], arrseg[4][1]);
+	B3seg.setXsegYseg(arrseg[5][0], arrseg[5][1]);
+	A4seg.setXsegYseg(arrseg[6][0], arrseg[6][1]);
+	B4seg.setXsegYseg(arrseg[7][0], arrseg[7][1]);
+
 	//test
-	
-	
+
+
 	A.set_x_y(mass[0][0], mass[0][1]);
 	B.set_x_y(mass[1][0], mass[1][1]);
 
-	int f= B.getX();
+	int f = B.getX();
 
-	segments Aseg;
+
 	Aseg.setXsegYseg(12, 2);
 	int g = Aseg.getYseg();
 
-	
+	int fr = intersectionOfproctions(1, 2, 5, 2, 2, 4, 4, 4);
 
- //end test
-	
-	
-   
+	//end test
+
+
+
 
 
 
@@ -377,7 +384,58 @@ int main()
 
 
 
+int intersectionOfproctions(int xarec, int yarec, int xbrec, int ybrec, int xaseg, int yaseg, int xbseg, int ybseg)
+{
 
+	int minXrec, maxXrec, minXseg, maxXseg, resminX, resmaxX;
+	if (xarec <= xbrec)
+	{
+		minXrec = xarec;
+		maxXrec = xbrec;
+	}
+	else {
+		minXrec = xbrec;
+		maxXrec = xarec;
+	}
+
+	if (xaseg <= xbseg)
+	{
+		minXseg = xaseg;
+		maxXseg = xbseg;
+	}
+	else
+	{
+		minXseg = xbseg;
+		maxXseg = xaseg;
+	}
+
+	if (minXrec > minXseg)
+	{
+		resminX = minXrec;
+	}
+	else
+	{
+		resminX = minXseg;
+	}
+
+	if (maxXrec < maxXseg)
+    {
+		resmaxX = maxXrec;
+    }
+	else
+	{
+		resmaxX=maxXseg;
+	}
+
+	if (resminX<resmaxX)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
 
 
 
