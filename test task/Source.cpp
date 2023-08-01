@@ -9,8 +9,9 @@ using namespace std;
 
 
 
-//int chekk(rectangle& A, rectangle& B, rectangle& C, rectangle& D, segments& Aseg, segments& Bseg);
+int chekk(class rectangle& A, rectangle& B, rectangle& C, rectangle& D, class segments& Aseg, segments& Bseg);
 int intersectionOfproctions(int xarec, int yarec, int xbrec, int ybrec, int xaseg, int yaseg, int xbseg, int ybseg);
+int intersectionOFsegments(int ax, int ay, int bx, int by, int axseg, int ayseg, int bxseg, int byseg);
 
 //class rectangle
 class rectangle
@@ -24,7 +25,7 @@ public:
 	int getY();
 
 	void sortPoint(int mass[][2]);
-	friend int chekk(rectangle& A, rectangle& B, rectangle& C, rectangle& D, segments& Aseg, segments& Bseg);
+	friend int chekk(class rectangle& A, rectangle& B, rectangle& C, rectangle& D, class segments & Aseg, segments & Bseg);
 
 
 
@@ -118,7 +119,7 @@ public:
 	void setXsegYseg(int xseg, int yseg);
 	int getXseg();
 	int getYseg();
-	friend int chekk(rectangle& A, rectangle& B, rectangle& C, rectangle& D, segments& Aseg, segments& Bseg);
+	friend int chekk(class rectangle& A, rectangle& B, rectangle& C, rectangle& D, class segments& Aseg, segments& Bseg);
 
 private:
 	int xseg;
@@ -152,23 +153,7 @@ int segments::getYseg()
 }
 
 // end class segments
-int chekk(rectangle& A, rectangle& B, rectangle& C, rectangle& D, segments& Aseg, segments& Bseg)
-{
-	int xa = A.getX();
-	int ya = A.getY();
-	int xb = B.getX();
-	int yb = B.getY();
-	int xc = C.getX();
-	int yc = C.getY();
-	int xd = D.getX();
-	int yd = D.getY();
-	int Xaseg = Aseg.getXseg();
-	int Yaseg = Aseg.getYseg();
-	int Xbseg = Bseg.getXseg();
-	int Ybseg = Bseg.getYseg();
 
-	//intersectionOfproctions();
-}
 
 int main()
 {
@@ -367,7 +352,9 @@ columcount--;
 	Aseg.setXsegYseg(12, 2);
 	int g = Aseg.getYseg();
 
-	int fr = intersectionOfproctions(1, 2, 5, 2, 2, 4, 4, 4);
+	int fr = intersectionOfproctions(4, 5, 3, 7, 4, 4, 5, 2);
+
+	intersectionOFsegments(2, 1, 4, 4, 2, 4, 5, 2);
 
 	//end test
 
@@ -381,13 +368,90 @@ columcount--;
 	return 0;
 }
 
+int chekk(class rectangle& A, rectangle& B, rectangle& C, rectangle& D, class segments& Aseg, segments& Bseg)
+{
+	int xa = A.getX();
+	int ya = A.getY();
+	int xb = B.getX();
+	int yb = B.getY();
+	int xc = C.getX();
+	int yc = C.getY();
+	int xd = D.getX();
+	int yd = D.getY();
+	int Xaseg = Aseg.getXseg();
+	int Yaseg = Aseg.getYseg();
+	int Xbseg = Bseg.getXseg();
+	int Ybseg = Bseg.getYseg();
+
+	//intersectionOfproctions();
 
 
+
+	return 0;
+}
+
+int intersectionOFsegments(int ax, int ay, int bx, int by, int axseg, int ayseg, int bxseg, int byseg)
+{
+	int AX, AY,BX,BY,res,res2;
+	bool result, result2;
+	AX = bx - ax;
+	AY = by - ay;
+
+	BX = axseg - ax;
+	BY = ayseg - ay;
+
+	res=AX* BY - AY * BX;
+
+	BX = bxseg - ax;
+	BY = byseg - ay;
+
+	res2 = AX * BY - AY * BX;
+
+	if (res>0&&res2<0||res<0&&res2>0)
+	{
+		result = 1;
+	}
+	else
+	{
+		result = 0;
+	}
+
+	AX = bxseg - axseg;
+	AY = byseg - ayseg;
+
+	BX = ax - axseg;
+	BY = by - ayseg;
+
+	res = AX * BY - AY * BX;
+
+	BX = bx - axseg;
+	BY = by - ayseg;
+
+	res2 = AX * BY - AY * BX;
+
+	if (res > 0 && res2 < 0 || res < 0 && res2>0)
+	{
+		result2 = 1;
+	}
+	else
+	{
+		result2 = 0;
+	}
+
+
+	return 0;
+}
 
 int intersectionOfproctions(int xarec, int yarec, int xbrec, int ybrec, int xaseg, int yaseg, int xbseg, int ybseg)
 {
-
+	bool chekX=false, chekY=false;
 	int minXrec, maxXrec, minXseg, maxXseg, resminX, resmaxX;
+	int minYrec, maxYrec, minYseg, maxYseg, resminY, resmaxY;
+	if (xarec==xaseg||xarec==xbseg||xbrec==xaseg||xbrec==xbseg|| yarec==yaseg||yarec==ybseg||ybrec==yaseg||ybrec==ybseg)
+	{
+		return 1;
+	}
+
 	if (xarec <= xbrec)
 	{
 		minXrec = xarec;
@@ -426,8 +490,61 @@ int intersectionOfproctions(int xarec, int yarec, int xbrec, int ybrec, int xase
 	{
 		resmaxX=maxXseg;
 	}
-
+	//пересечение по х
 	if (resminX<resmaxX)
+	{
+		chekX=true;
+	}
+	
+	//пересечение по х
+
+	if (yarec <= ybrec)
+	{
+		minYrec = yarec;
+		maxYrec = ybrec;
+	}
+	else {
+		minYrec = ybrec;
+		maxYrec = yarec;
+	}
+
+	if (yaseg <= ybseg)
+	{
+		minYseg = yaseg;
+		maxYseg = ybseg;
+	}
+	else
+	{
+		minYseg = ybseg;
+		maxYseg = yaseg;
+	}
+
+	if (minYrec > minYseg)
+	{
+		resminY = minYrec;
+	}
+	else
+	{
+		resminY = minYseg;
+	}
+
+	if (maxYrec < maxYseg)
+	{
+		resmaxY = maxYrec;
+	}
+	else
+	{
+		resmaxY = maxYseg;
+	}
+	//пересечение по y
+	if (resminY < resmaxY)
+	{
+		chekY=true;
+	}
+	
+	//пересечение по y
+
+	if (chekX==true||chekY==true)
 	{
 		return 1;
 	}
