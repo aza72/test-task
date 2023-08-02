@@ -12,6 +12,7 @@ using namespace std;
 int chekk(class rectangle& A, rectangle& B, rectangle& C, rectangle& D, class segments& Aseg, segments& Bseg);
 int intersectionOfproctions(int xarec, int yarec, int xbrec, int ybrec, int xaseg, int yaseg, int xbseg, int ybseg);
 int intersectionOFsegments(int ax, int ay, int bx, int by, int axseg, int ayseg, int bxseg, int byseg);
+int pointAffiliation(int ax, int ay, int bx, int by, int cx, int cy, int axseg, int ayseg);
 
 //class rectangle
 class rectangle
@@ -157,6 +158,9 @@ int segments::getYseg()
 
 int main()
 {
+
+	
+
 	int point=0;
 	int size = 4;
 	int arr[4][2];
@@ -354,7 +358,9 @@ columcount--;
 
 	int fr = intersectionOfproctions(4, 5, 3, 7, 4, 4, 5, 2);
 
-	intersectionOFsegments(2, 1, 4, 4, 2, 4, 5, 2);
+	//int dd=intersectionOFsegments(1, 1, 1, 4, 2, 1, 3, 2);
+
+	pointAffiliation(2, 1, 2, 4, 2,2,3,2);
 
 	//end test
 
@@ -383,13 +389,141 @@ int chekk(class rectangle& A, rectangle& B, rectangle& C, rectangle& D, class se
 	int Xbseg = Bseg.getXseg();
 	int Ybseg = Bseg.getYseg();
 
-	//intersectionOfproctions();
+	int Ap,Ap1;
+	//проверка принадлежности точки
+	Ap=pointAffiliation(xa, ya, xb, yb, xc, yc, Xaseg, Yaseg);
+	if (Ap==0)
+	{
+		Ap = pointAffiliation(xc, yc, xd, yd, xa, ya, Xaseg, Yaseg);
+	}
+    
+	Ap1= pointAffiliation(xa, ya, xb, yb, xc, yc, Xbseg, Ybseg);
+	if (Ap1 == 0)
+	{
+		Ap1 = pointAffiliation(xc, yc, xd, yd, xa, ya, Xbseg, Ybseg);
+	}
+	if (Ap==1&&Ap1==1)
+	{
+		return 0;
+	}
+	if (Ap==1||Ap1==1)
+	{
+		return 2;
+	}
+	
+	// конец проверка принадлежности точки
+
+	//Пересечение проекций
+	int abp, bcp, cdp, dap;
+
+	abp=intersectionOfproctions(xa,ya,xb,yb,Xaseg,Yaseg,Xbseg,Ybseg);
+	bcp = intersectionOfproctions(xb, yb, xc, yc, Xaseg, Yaseg, Xbseg, Ybseg);
+	cdp = intersectionOfproctions(xc, yc, xd, yd, Xaseg, Yaseg, Xbseg, Ybseg);
+	dap = intersectionOfproctions(xd, yd, xa, ya, Xaseg, Yaseg, Xbseg, Ybseg);
+
+	if (abp==0&&bcp==0&&cdp==0&&dap==0)
+	{
+		return 3;
+	}
+	//Конец пересечение проекций
+
+	//пересечение отрезков
+	int abs, bcs, cds, das;
+
+	abs = intersectionOFsegments(xa, ya, xb, yb, Xaseg, Yaseg, Xbseg, Ybseg);
+	if (abs==1)
+	{
+		return 1;
+	}
+	bcs = intersectionOFsegments(xb, yb, xc, yc, Xaseg, Yaseg, Xbseg, Ybseg);
+	if (bcs == 1)
+	{
+		return 1;
+	}
+	cds = intersectionOFsegments(xc, yc, xd, yd, Xaseg, Yaseg, Xbseg, Ybseg);
+	if (cds == 1)
+	{
+		return 1;
+	}
+	das = intersectionOFsegments(xd, yd, xa, ya, Xaseg, Yaseg, Xbseg, Ybseg);
+	if (das == 1)
+	{
+		return 1;
+	}
+
+	
 
 
+	//конец пересечение отрезков
 
-	return 0;
+
+	return 3;
 }
+//принадлежность точки
+int pointAffiliation(int ax, int ay, int bx, int by, int cx, int cy, int axseg, int ayseg)
+{
+	int avec, bvec, cvec,AX,AY,BX,BY,count=0;
 
+	AX = axseg - ax;
+	AY = ayseg - ay;
+	BX = bx - ax;
+	BY = by - ay;
+	avec = AX * BY - AY * BX;
+	if (avec>0)
+	{
+		count++;
+	}
+	else
+	{
+		count--;
+	}
+	AX = axseg-bx;
+	AY = ayseg-by;
+	BX = cx-bx;
+	BY = cy-by;
+	bvec= AX * BY - AY * BX;
+	if (bvec > 0)
+	{
+		count++;
+	}
+	else
+	{
+		count--;
+	}
+
+	AX = axseg - cx;
+	AY = ayseg - cy;
+	BX = ax - cx;
+	BY = ay - cy;
+
+	cvec= AX * BY - AY * BX;
+	if (cvec > 0)
+	{
+		count++;
+	}
+	else
+	{
+		count--;
+	}
+
+	if (avec==0||bvec==0||cvec==0)
+	{
+		return 1;
+
+	}
+
+	if (count==3||count==-3)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+	
+
+}
+//пересечение отрезков
 int intersectionOFsegments(int ax, int ay, int bx, int by, int axseg, int ayseg, int bxseg, int byseg)
 {
 	int AX, AY,BX,BY,res,res2;
@@ -407,6 +541,11 @@ int intersectionOFsegments(int ax, int ay, int bx, int by, int axseg, int ayseg,
 
 	res2 = AX * BY - AY * BX;
 
+	if (res==0||res2==0)
+	{
+		return 2;
+	}
+
 	if (res>0&&res2<0||res<0&&res2>0)
 	{
 		result = 1;
@@ -416,11 +555,11 @@ int intersectionOFsegments(int ax, int ay, int bx, int by, int axseg, int ayseg,
 		result = 0;
 	}
 
-	AX = bxseg - axseg;
-	AY = byseg - ayseg;
+	AX = bxseg-axseg;
+    AY = byseg - ayseg;
 
-	BX = ax - axseg;
-	BY = by - ayseg;
+	BX = ax-axseg;
+	BY = ay - ayseg;
 
 	res = AX * BY - AY * BX;
 
@@ -428,6 +567,11 @@ int intersectionOFsegments(int ax, int ay, int bx, int by, int axseg, int ayseg,
 	BY = by - ayseg;
 
 	res2 = AX * BY - AY * BX;
+
+	if (res==0||res2==0)
+	{
+		return 2;
+	}
 
 	if (res > 0 && res2 < 0 || res < 0 && res2>0)
 	{
@@ -438,10 +582,18 @@ int intersectionOFsegments(int ax, int ay, int bx, int by, int axseg, int ayseg,
 		result2 = 0;
 	}
 
-
-	return 0;
+	if (result&&result2)
+	{
+		return 1;
+	}
+	if (!result&&!result2)
+	{
+		return 0;
+	}
+	
+	
 }
-
+//пересечение проекций
 int intersectionOfproctions(int xarec, int yarec, int xbrec, int ybrec, int xaseg, int yaseg, int xbseg, int ybseg)
 {
 	bool chekX=false, chekY=false;
@@ -544,7 +696,7 @@ int intersectionOfproctions(int xarec, int yarec, int xbrec, int ybrec, int xase
 	
 	//пересечение по y
 
-	if (chekX==true||chekY==true)
+	if (chekX||chekY)
 	{
 		return 1;
 	}
