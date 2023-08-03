@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <vector>
+
 
 
 using namespace std;
@@ -109,7 +109,7 @@ void rectangle::sortPoint(int mass[][2])
 	
 }
 
-// end class rectangle
+
 
 // class segments
 class segments
@@ -153,7 +153,7 @@ int segments::getYseg()
 	return yseg;
 }
 
-// end class segments
+
 
 
 int main()
@@ -167,7 +167,8 @@ int main()
 	string str;
 	string polys = "polys.txt";
 	string lines = "lines.txt";
-	ofstream fileout_polys, fileout_lines;
+	string result = "results.txt";
+	ofstream fileout_polys, fileout_lines,results;
 	ifstream in(polys),in1(lines);
 	fileout_polys.open(polys);
 	fileout_lines.open(lines);
@@ -216,9 +217,9 @@ int main()
 	      while (!in.eof())
 	       {
 		    getline(in, str);
-		     cout << str;//удалить
+		     cout << str;
 	       }
-		  cout << endl;//удалить
+		  cout << endl;
 	in.close();
 
 	int rowcount = 0;
@@ -284,18 +285,22 @@ int main()
 		{
 			if (j == 0)
 			{
-				cout << i << " Enter X=";
+				cout << i+1 << " Enter X=";
 				cin >> temp;
 				fileout_lines << "X=" << temp << ",";
 			}
 			if (j == 1)
 			{
-				cout << i << " Enter Y=";
+				cout << i+1 << " Enter Y=";
 				cin >> temp;
 				fileout_lines << "Y=" << temp << "\t";
 			}
 		}
-		fileout_lines << "\n" ;
+		if (i%2!=0)
+		{
+			fileout_lines << "\n";
+		}
+		
 	}
 	fileout_lines.close();
 	//считывание отрезки
@@ -304,11 +309,11 @@ int main()
 	 res = "";
 	 r = 0;
 	int arrseg[8][2];
-	//str = "";
+	
 	while (!in1.eof())
 	{
 		getline(in1, str);
-		cout << str;//удалить
+		
 		for (int i = 0; i < str.size(); i++)
 		{
 			if (str[i] == '=')
@@ -344,34 +349,38 @@ columcount--;
 	A4seg.setXsegYseg(arrseg[6][0], arrseg[6][1]);
 	B4seg.setXsegYseg(arrseg[7][0], arrseg[7][1]);
 
-	//test
+	int seg,seg2,seg3,seg4;
 
+	seg = chekk(A, B, C, D, Aseg, Bseg);
+	seg2 = chekk(A, B, C, D, A2seg, B2seg);
+	seg3 = chekk(A, B, C, D, A3seg, B3seg);
+	seg4 = chekk(A, B, C, D, A4seg, B4seg);
 
-	A.set_x_y(mass[0][0], mass[0][1]);
-	B.set_x_y(mass[1][0], mass[1][1]);
+	int answer[4]{seg,seg2,seg3,seg4};
+	
 
-	int f = B.getX();
+	in1.open(lines);
+	results.open(result);
 
+	if (!in1.is_open())
+	{
+		cout << "Error";
+	}
+	if (!results.is_open())
+	{
+		cout << "Error";
+	}
+	int count = 0;
+	while (!in1.eof())
+	{
+		getline(in1, str);
+		if (count < 4) {
+			results << str << "  од отрезка: " << answer[count] << endl;
+			count++;
+		}
+	}
 
-	Aseg.setXsegYseg(12, 2);
-	int g = Aseg.getYseg();
-
-	int fr = intersectionOfproctions(4, 5, 3, 7, 4, 4, 5, 2);
-
-	//int dd=intersectionOFsegments(1, 1, 1, 4, 2, 1, 3, 2);
-
-	pointAffiliation(2, 1, 2, 4, 2,2,3,2);
-
-	//end test
-
-
-
-
-
-
-
-
-	return 0;
+   return 0;
 }
 
 int chekk(class rectangle& A, rectangle& B, rectangle& C, rectangle& D, class segments& Aseg, segments& Bseg)
@@ -411,7 +420,7 @@ int chekk(class rectangle& A, rectangle& B, rectangle& C, rectangle& D, class se
 		return 2;
 	}
 	
-	// конец проверка принадлежности точки
+	
 
 	//ѕересечение проекций
 	int abp, bcp, cdp, dap;
@@ -425,7 +434,7 @@ int chekk(class rectangle& A, rectangle& B, rectangle& C, rectangle& D, class se
 	{
 		return 3;
 	}
-	// онец пересечение проекций
+	
 
 	//пересечение отрезков
 	int abs, bcs, cds, das;
@@ -454,7 +463,7 @@ int chekk(class rectangle& A, rectangle& B, rectangle& C, rectangle& D, class se
 	
 
 
-	//конец пересечение отрезков
+	
 
 
 	return 3;
