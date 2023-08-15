@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test task", "test task\test
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sort", "Sort\Sort.vcxproj", "{1D22D1EE-1CF7-47D9-8D4C-151688CB27A6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "opencv_project", "opencv_project\opencv_project.vcxproj", "{0911D42B-161F-43B0-A8ED-03B19968F753}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{1D22D1EE-1CF7-47D9-8D4C-151688CB27A6}.Release|x64.Build.0 = Release|x64
 		{1D22D1EE-1CF7-47D9-8D4C-151688CB27A6}.Release|x86.ActiveCfg = Release|Win32
 		{1D22D1EE-1CF7-47D9-8D4C-151688CB27A6}.Release|x86.Build.0 = Release|Win32
+		{0911D42B-161F-43B0-A8ED-03B19968F753}.Debug|x64.ActiveCfg = Debug|x64
+		{0911D42B-161F-43B0-A8ED-03B19968F753}.Debug|x64.Build.0 = Debug|x64
+		{0911D42B-161F-43B0-A8ED-03B19968F753}.Debug|x86.ActiveCfg = Debug|Win32
+		{0911D42B-161F-43B0-A8ED-03B19968F753}.Debug|x86.Build.0 = Debug|Win32
+		{0911D42B-161F-43B0-A8ED-03B19968F753}.Release|x64.ActiveCfg = Release|x64
+		{0911D42B-161F-43B0-A8ED-03B19968F753}.Release|x64.Build.0 = Release|x64
+		{0911D42B-161F-43B0-A8ED-03B19968F753}.Release|x86.ActiveCfg = Release|Win32
+		{0911D42B-161F-43B0-A8ED-03B19968F753}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
